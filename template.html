@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi.COSY</title>
+<meta name="description" content="Mi.COSY, a 19-year-old painter, and Cosy, the striped character in every work. Be cosy.">
+<meta property="og:title" content="Mi.COSY">
+<meta property="og:description" content="Do what you really want to do. Don't be an actor.">
+<meta property="og:image" content="img/cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Outfit:wght@400;500;700&display=swap">
+<style>
+  /* Layout: the portfolio's own format, online. The hand-painted Mi.COSY wordmark and the hand-written rule titles are
+     lifted from the presentation unchanged; headings use its Mochiy Pop One with the blue underline; labels are its outlined
+     pills. Colours and stripes come from the paintings: Lady's red stripes in the hero, Melting ice's yellow stripes as the
+     divider, the Farmers' black fields in the footer. Works are shown straight, flat, without shadows. */
+  :root {
+    --paper: #F2EDE3;      /* canvas cream, from the paintings' grounds */
+    --card: #FBF8F1;
+    --ink: #15120E;
+    --muted: #6E6659;
+    --rule: #15120E;
+    --line: rgba(21, 18, 14, .14);
+    --shadow: #15120E;
+    /* chapters alternate between two tones of the same canvas cream, nothing more */
+    --sand: #E9E2D3;
+    --bg-about: var(--sand);
+    --bg-rules: var(--paper);
+    --bg-art: var(--sand);
+    --bg-works: var(--paper);
+    --red: #B8191F;        /* crimson stripes, Mi Cosy Lady / Cosy holding a serviette */
+    --blue: #1C3F86;       /* navy stripes, Cheesecake tasting / Don't hit the Ducks */
+    --yellow: #E1A50B;     /* Melting ice */
+    --orange: #EA6805;     /* The Farmers */
+    --pink: #CD80A2;       /* Lady's hair */
+    --green: #14AE5C;      /* rule 1 lettering */
+    --purple: #9747FF;     /* rule 3 lettering */
+    --on-yellow: #15120E;
+    --on-ink: #F2EDE3;
+    --font-display: "Mochiy Pop One", "Arial Rounded MT Bold", "Nunito", sans-serif;
+    --font-body: "Outfit", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #17161B; --card: #21202A; --ink: #F1ECE2; --muted: #ABA396; --rule: #F1ECE2; --line: rgba(241, 236, 226, .16); --shadow: #000000;
+      --sand: #1E1D23;
+      --red: #E8554E; --blue: #8AA2F0; --yellow: #E1A50B; --orange: #F58A3C; --pink: #E0A0BE; --green: #3BCB79; --purple: #B394FF;
+      --on-yellow: #15120E; --on-ink: #17161B;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #17161B; --card: #21202A; --ink: #F1ECE2; --muted: #ABA396; --rule: #F1ECE2; --line: rgba(241, 236, 226, .16); --shadow: #000000;
+    --sand: #1E1D23;
+    --red: #E8554E; --blue: #8AA2F0; --yellow: #E1A50B; --orange: #F58A3C; --pink: #E0A0BE; --green: #3BCB79; --purple: #B394FF;
+    --on-yellow: #15120E; --on-ink: #17161B;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  .wrap { width: min(1120px, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+  .measure { max-width: 62ch; }
+  mark { background: linear-gradient(transparent 12%, var(--yellow) 12%, var(--yellow) 92%, transparent 92%); color: var(--on-yellow); padding: 0 .18em; margin: 0 -.05em; }
+
+  /* ---- the presentation's outlined pills ---- */
+  .pill {
+    display: inline-flex; align-items: center; justify-content: center; text-align: center; gap: .45em;
+    border: 3px solid var(--ink); border-radius: 999px; padding: .5em 1.1em; background: var(--card);
+    font-weight: 700; font-size: .95rem; line-height: 1.25;
+  }
+  .pill--green { border-color: var(--green); }
+  .pill--orange { border-color: var(--orange); }
+  .pill--purple { border-color: var(--purple); }
+  .pill--fill { background: var(--purple); border-color: var(--purple); color: #fff; }
+  .pill--wide { border-radius: 32px; padding: .9em 1.4em; max-width: 60ch; }
+  .pills { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5em;
+    font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+    padding: .8em 1.5em; border-radius: 999px; border: 3px solid var(--ink);
+    background: var(--ink); color: var(--on-ink); text-decoration: none; cursor: pointer;
+  }
+  .btn:hover { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn--ghost { background: var(--card); color: var(--ink); }
+  .btn--ghost:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+  /* ---- header ---- */
+  .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--paper); border-bottom: 1px solid var(--line); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 66px; }
+  .brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
+  .brand img.mark { height: 40px; width: auto; }
+  .brand img.face { height: 42px; width: auto; }
+  .nav { display: flex; align-items: center; gap: clamp(.6rem, 2vw, 1.6rem); font-weight: 700; font-size: .95rem; }
+  .nav a { text-decoration: none; padding: .35em 0; border-bottom: 3px solid transparent; }
+  .nav a:hover { border-bottom-color: var(--blue); }
+  .nav__login { font: inherit; font-weight: 700; color: var(--ink); background: var(--card); border: 2.5px solid var(--ink); border-radius: 999px; padding: .3em .95em; cursor: pointer; }
+  .nav__login:hover { background: var(--ink); color: var(--on-ink); }
+  @media (max-width: 640px) { .nav a:not(.nav__keep) { display: none; } }
+
+  /* ---- hero: wordmark on the left, the cover painting pinned on a small striped panel on the right ---- */
+  .hero { background: var(--paper); }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; padding-block: clamp(2.5rem, 6vw, 5rem); }
+  .hero__eyebrow { margin-bottom: 1.6rem; }
+  .hero__mark { width: min(100%, 460px); height: auto; margin-bottom: 1.6rem; }
+  .hero h1 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); color: var(--blue); }
+  .hero h1 .alt { display: block; color: var(--red); margin-top: .2em; }
+  .hero__lead { font-size: 1.15rem; max-width: 44ch; margin-top: 1.3rem; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 1.8rem; }
+  .hero__art { position: relative; padding: 6% 4% 8% 10%; min-width: 0; }
+  .hero__stripes {
+    position: absolute; inset: 0 0 4% 14%;
+    background: repeating-linear-gradient(180deg, var(--red) 0 24px, var(--paper) 24px 48px);
+    border: 3px solid var(--ink); transform: rotate(-3deg);
+  }
+  .hero__cover {
+    position: relative; width: 82%; border: 3px solid var(--ink);
+    box-shadow: 10px 10px 0 var(--shadow); transform: rotate(2deg); background: var(--card);
+  }
+  .hero__tag { position: absolute; right: 2%; bottom: 0; transform: rotate(-4deg); box-shadow: 3px 3px 0 var(--shadow); font-size: .85rem; }
+  @media (max-width: 820px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero__art { max-width: 420px; margin-inline: auto; }
+  }
+
+  /* ---- sections ---- */
+  .section { padding-block: clamp(3rem, 8vw, 6.5rem); }
+  .sec-about { background: var(--bg-about); }
+  .sec-rules { background: var(--bg-rules); }
+  .sec-art { background: var(--bg-art); }
+  .sec-works { background: var(--bg-works); }
+  .h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem); color: var(--blue);
+    text-decoration: underline; text-decoration-thickness: .12em; text-underline-offset: .14em; text-decoration-skip-ink: none;
+    margin-bottom: 1.2rem;
+  }
+  .kicker { font-family: var(--font-display); font-size: .95rem; color: var(--red); margin-bottom: .6rem; }
+  .stack { display: grid; gap: 1.1rem; }
+  .lead { font-size: 1.2rem; }
+
+  /* about */
+  .about .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  .about__figure { position: relative; display: grid; justify-items: center; }
+  .about__figure img { width: min(100%, 340px); }
+  .about__bubble { position: absolute; top: 0; right: 2%; transform: rotate(6deg); }
+  .goal { margin-top: 2rem; padding: 1.4rem 1.6rem; border: 3px solid var(--ink); border-radius: 28px; background: var(--card); }
+  .goal h3 { font-size: 1.5rem; color: var(--red); margin-bottom: .5rem; }
+  @media (max-width: 820px) { .about .wrap { grid-template-columns: 1fr; } .about__figure { order: -1; } }
+
+  /* rules: the hand-written titles from the presentation */
+  .rules { display: grid; gap: clamp(2.2rem, 5vw, 3.6rem); margin-top: 2.2rem; }
+  .rule { display: grid; gap: 1.1rem; justify-items: start; }
+  .rule__title { width: min(100%, 620px); height: auto; }
+  .rule__row { display: grid; grid-template-columns: auto auto auto; gap: 1rem; align-items: center; }
+  .rule__arrow { width: 72px; height: auto; color: var(--green); }
+  @media (max-width: 540px) { .rule__row { grid-template-columns: 1fr; justify-items: start; } .rule__arrow { transform: rotate(90deg); width: 48px; } }
+  .verdict { margin-top: clamp(2.5rem, 6vw, 4rem); text-align: center; display: grid; justify-items: center; gap: .9rem; color: var(--red); }
+  .verdict h3 { font-size: clamp(1.6rem, 4vw, 2.3rem); }
+  .verdict svg { width: 72px; height: auto; color: var(--ink); }
+  .verdict .big { font-family: var(--font-display); font-size: clamp(1.4rem, 3.6vw, 2rem); line-height: 1.2; }
+  .verdict .congrats { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: .04em; }
+
+  /* our art: tiles cut from the paintings themselves */
+  .traits { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 3vw, 2rem); margin-top: 2rem; }
+  .trait { display: grid; gap: .9rem; align-content: start; min-width: 0; }
+  .trait__tile { aspect-ratio: 1; max-width: 100%; border: 3px solid var(--ink); overflow: hidden; background: var(--card); }
+  .trait__tile img { width: 100%; height: 100%; object-fit: cover; }
+  .tile--stripes { background: url("img/tex-red.webp") repeat-x left top / auto 100%; }
+  .trait h3 { font-size: 1.45rem; color: var(--red); text-decoration: underline; text-decoration-thickness: .1em; text-underline-offset: .12em; }
+  .trait .motto { font-family: var(--font-display); color: var(--blue); font-size: 1rem; }
+  @media (max-width: 760px) { .traits { grid-template-columns: 1fr; } .trait__tile { max-width: 320px; } }
+  .why { margin-top: clamp(2.5rem, 6vw, 4rem); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+  .why blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.8rem); line-height: 1.3; color: var(--ink); }
+  .why blockquote strong { color: var(--red); font-weight: 400; }
+  .why .stack p { font-size: 1.05rem; }
+  .why h3 { font-size: 1.45rem; color: var(--blue); text-decoration: underline; text-decoration-thickness: .1em; text-underline-offset: .12em; }
+  .motto--red { font-family: var(--font-display); color: var(--red); }
+  @media (max-width: 760px) { .why { grid-template-columns: 1fr; } }
+
+  /* works: straight, flat, labelled like the presentation */
+  .works__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; }
+  .works__head p { color: var(--muted); font-weight: 500; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.2rem) clamp(1.2rem, 3vw, 2.4rem); margin-top: 2.4rem; align-items: start; }
+  .work { margin: 0; min-width: 0; display: grid; gap: .9rem; align-content: start; }
+  .work figcaption { display: grid; gap: .5rem; justify-items: start; }
+  .work figcaption .pill { font-size: .9rem; }
+  .work figcaption span { font-weight: 700; font-size: .9rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+  .work figcaption span small { display: block; font-weight: 500; color: var(--muted); font-size: .85rem; }
+  .work__btn { display: block; width: 100%; padding: 0; margin: 0; border: 0; background: transparent; cursor: zoom-in; }
+  .work__btn img { width: 100%; }
+  .work__btn:hover img { opacity: .92; }
+  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+
+  /* panels & forms: adding works, contact, inbox */
+  .panel { border: 3px solid var(--ink); border-radius: 28px; background: var(--card); padding: clamp(1.2rem, 3vw, 1.8rem); display: grid; gap: 1rem; margin-top: 2rem; }
+  .panel h3 { font-size: 1.3rem; color: var(--red); }
+  .panel p { color: var(--muted); }
+  .form { display: grid; gap: .9rem 1.2rem; grid-template-columns: repeat(2, 1fr); }
+  .field { display: grid; gap: .3rem; min-width: 0; }
+  .field--full { grid-column: 1 / -1; }
+  .field label { font-weight: 700; font-size: .85rem; }
+  .field input, .field select, .field textarea { font: inherit; color: var(--ink); background: var(--paper); border: 2.5px solid var(--ink); border-radius: 14px; padding: .6em .9em; width: 100%; min-width: 0; }
+  .field textarea { min-height: 130px; resize: vertical; }
+  .field input[type="file"] { padding: .45em .7em; }
+  .form__actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+  .status { font-weight: 700; color: var(--blue); min-height: 1.4em; }
+  .status--err { color: var(--red); }
+  .preview { width: 140px; border: 2.5px solid var(--ink); }
+  .inbox { display: grid; gap: .8rem; }
+  .msg { border: 2.5px solid var(--ink); border-radius: 18px; padding: .9rem 1.1rem; background: var(--paper); display: grid; gap: .3rem; }
+  .msg__head { display: flex; flex-wrap: wrap; gap: .3rem 1rem; align-items: baseline; }
+  .msg__head strong { font-size: 1rem; }
+  .msg__head span { color: var(--muted); font-size: .85rem; }
+  .msg p { color: var(--ink); white-space: pre-wrap; }
+  .pill--status { font-size: .8rem; padding: .35em .9em; }
+  .pill--available { border-color: var(--green); color: var(--green); }
+  .pill--sold { border-color: var(--red); color: var(--red); }
+  .work__edit { font: inherit; font-weight: 700; font-size: .8rem; color: var(--blue); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+  .work__edit:hover { color: var(--red); }
+  .work--hidden { opacity: .45; }
+  .works__tools { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; }
+  .btn--small { padding: .5em 1.1em; font-size: .9rem; }
+  .btn--danger:hover { background: var(--red); border-color: var(--red); color: #fff; }
+  .panel--note { display: block; color: var(--ink); }
+  .lb--small { width: min(560px, calc(100vw - 32px)); }
+  .lb__form { padding: clamp(1.2rem, 3vw, 2rem); display: grid; gap: 1rem; max-height: calc(100vh - 38px); overflow: auto; }
+  .lb__form h3 { font-size: 1.4rem; color: var(--red); }
+  .lb__form > p { color: var(--muted); }
+  .admin__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.2rem, 3vw, 2rem); margin-top: 1.5rem; align-items: start; }
+  .admin .panel { margin-top: 0; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; }
+  .stat { border: 2.5px solid var(--ink); border-radius: 18px; padding: .8rem .6rem; display: grid; justify-items: center; gap: .2rem; background: var(--paper); }
+  .stat__n { font-family: var(--font-display); font-size: 1.6rem; color: var(--blue); font-variant-numeric: tabular-nums; }
+  .stat__l { font-size: .8rem; font-weight: 700; color: var(--muted); }
+  .stats__scroll { overflow-x: auto; }
+  .stats__table { width: 100%; border-collapse: collapse; font-size: .9rem; font-variant-numeric: tabular-nums; }
+  .stats__table th, .stats__table td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid var(--line); }
+  .stats__table th { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .stats__table td:not(:first-child), .stats__table th:not(:first-child) { text-align: right; }
+  @media (max-width: 860px) { .admin__grid { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(2, 1fr); } }
+  .contact__email { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; }
+  .contact__email a { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 1.8rem); color: var(--red); text-decoration: none; word-break: break-all; }
+  .contact__email a:hover { text-decoration: underline; }
+  .contact__copy { cursor: pointer; font-family: var(--font-body); }
+  .contact .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .contact .panel { margin-top: 0; }
+  .contact .form { grid-template-columns: 1fr; }
+  @media (max-width: 820px) { .contact .wrap { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .form { grid-template-columns: 1fr; } }
+
+  /* lightbox */
+  .lb { border: 3px solid var(--ink); border-radius: 28px; padding: 0; background: var(--card); color: var(--ink);
+        width: min(1040px, calc(100vw - 32px)); max-height: calc(100vh - 32px); }
+  .lb::backdrop { background: rgba(10, 8, 6, .72); }
+  .lb__inner { display: grid; grid-template-columns: 1fr 260px; gap: 1.5rem; padding: clamp(1rem, 3vw, 2rem); max-height: calc(100vh - 38px); overflow: auto; }
+  .lb__img { display: grid; place-items: center; min-width: 0; }
+  .lb__img img { max-height: calc(100vh - 120px); width: auto; max-width: 100%; }
+  .lb__meta { display: grid; gap: .6rem; align-content: start; }
+  .lb__meta h3 { font-size: 1.5rem; color: var(--red); }
+  .lb__meta dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: .3rem .8rem; font-size: .95rem; }
+  .lb__meta dt { font-weight: 700; color: var(--muted); align-self: center; }
+  .lb__meta dd { margin: 0; font-weight: 700; }
+  .lb__nav { display: flex; gap: .6rem; margin-top: 1rem; flex-wrap: wrap; }
+  .lb__nav .btn { padding: .6em 1.1em; font-size: .9rem; }
+  .lb__close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--ink);
+               background: var(--card); color: var(--ink); font-size: 1.4rem; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 760px) { .lb__inner { grid-template-columns: 1fr; } .lb__img img { max-height: 60vh; } }
+
+  /* footer */
+  .foot { border-top: 1px solid var(--line); }
+  .foot .wrap { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; justify-content: space-between; padding-block: 1.8rem 2.2rem; }
+  .foot img { height: 56px; width: auto; }
+  .foot p { font-size: .95rem; color: var(--muted); }
+  .foot .sig { font-family: var(--font-display); font-size: 1.2rem; color: var(--red); }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  html { color-scheme: light; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Mi.COSY, back to top">
+      <img class="mark" src="img/micosy-wordmark-s.png" alt="Mi.COSY" width="400" height="184">
+      <img class="face" src="img/cosy-small.webp" alt="" width="238" height="400">
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">Cosy</a>
+      <a href="#rules">Be cosy rules</a>
+      <a href="#art">Our art</a>
+      <a class="nav__keep" href="#works">Works</a>
+      <a class="nav__keep" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="pills hero__eyebrow">
+          <span class="pill">Portfolio</span>
+          <span class="pill">Age: 19</span>
+          <span class="pill">Stripe addict :)</span>
+        </div>
+        <img class="hero__mark" src="img/micosy-wordmark.png" alt="Mi.COSY" width="1200" height="551">
+        <h1>Do what you really want to do.<span class="alt">Don't be an actor.</span></h1>
+        <p class="hero__lead">Mi.COSY is a 19-year-old painter. Cosy is the striped character who appears in every work. Together, their goal is simple: make the world a little more cosy.</p>
+        <div class="hero__cta">
+          <a class="btn" href="#works">See the works</a>
+          <a class="btn btn--ghost" href="#rules">Read the rules</a>
+        </div>
+      </div>
+      <div class="hero__art">
+        <div class="hero__stripes" aria-hidden="true"></div>
+        <img class="hero__cover" src="img/cover.webp" width="887" height="1279" alt="Cosy painted in a loose blue outline over a splash of red acrylic: the portfolio cover.">
+        <span class="pill hero__tag">Thinking, thinking, even more thinking</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about sec-about" id="about">
+    <div class="wrap">
+      <div class="about__figure">
+        <img src="img/cosy.webp" width="475" height="801" alt="Cosy: black curly hair, big round eyes, a small red mouth and a black-and-white striped shirt.">
+        <span class="pill about__bubble">Hi, I'm Cosy</span>
+      </div>
+      <div>
+        <p class="kicker">About</p>
+        <h2 class="h2">This is Cosy</h2>
+        <div class="stack measure">
+          <p class="lead">Cosy is the character I use, and she appears in all my works and projects.</p>
+          <p>That's why I'll use the word <strong>“our”</strong>, because there are two of us.</p>
+        </div>
+        <div class="goal measure">
+          <h3>Our goal</h3>
+          <p>Our goal is to make the world more cosy. We want everyone to be able to <mark>be themselves</mark>, <mark>enjoy life</mark> and do what they want, what they <em>really</em> want. It's very simple: everyone should pursue their dream and be happy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sec-rules" id="rules">
+    <div class="wrap">
+      <p class="kicker">Our philosophy</p>
+      <h2 class="h2">Be cosy rules</h2>
+      <p class="lead measure">Three rules. Follow them and you're living a cosy life.</p>
+
+      <div class="rules">
+        <article class="rule">
+          <h3><img class="rule__title" src="img/rule-1.png" alt="1. Be yourself" width="1400" height="305"></h3>
+          <div class="rule__row">
+            <span class="pill pill--green">Don't play a role</span>
+            <svg class="rule__arrow" viewBox="0 0 96 56" aria-hidden="true"><path d="M0 16h56V0l40 28-40 28V40H0z" fill="currentColor"/></svg>
+            <span class="pill pill--green">Just be yourself</span>
+          </div>
+        </article>
+        <article class="rule">
+          <h3><img class="rule__title" src="img/rule-2.png" alt="2. Be free" width="1400" height="240"></h3>
+          <p class="pill pill--orange pill--wide">Do whatever you want; no matter what your dream is, go after it. Never do anything you don't enjoy or don't want to do.</p>
+        </article>
+        <article class="rule">
+          <h3><img class="rule__title" src="img/rule-3.png" alt="3. Be happy" width="1400" height="270"></h3>
+          <div class="pills">
+            <span class="pill pill--purple">Always smile and laugh</span>
+            <span class="pill pill--purple">Always think positively</span>
+            <span class="pill pill--fill">Have confidence in yourself</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="verdict">
+        <h3>If you follow these 3 rules</h3>
+        <svg viewBox="0 0 64 80" aria-hidden="true"><path d="M22 2h20v40h16L32 78 6 42h16z" fill="currentColor"/></svg>
+        <p class="big">You're living a cosy life.</p>
+        <p class="congrats">Congratulations!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sec-art" id="art">
+    <div class="wrap">
+      <p class="kicker">What we make</p>
+      <h2 class="h2">Our art</h2>
+      <p class="lead measure">Main characteristics: three things run through every piece.</p>
+
+      <div class="traits">
+        <article class="trait">
+          <div class="trait__tile tile--stripes" aria-hidden="true"></div>
+          <h3>Stripes</h3>
+          <p>Stripes are very important to us; we have a very emotional connection to them. Cosy and I only wear stripes. Why? Because to us, stripes are like a path, a well-defined path. A line is a line: it goes straight, never strays from its course and moves forward relentlessly. It has a goal and pursues it no matter what.</p>
+          <p class="motto">Everyone should be like a stripe.</p>
+        </article>
+        <article class="trait">
+          <div class="trait__tile"><img src="img/tile-textile.webp" width="560" height="560" alt="Detail of the checkered cloth hanging from Cosy holding a serviette." loading="lazy"></div>
+          <h3>Textiles</h3>
+          <p>We use old clothes and old fabrics, because there's nothing more pleasant than the feel of clothes and fabrics. They keep us warm in winter, like a cosy blanket, or protect us.</p>
+          <p class="motto">A second skin.</p>
+        </article>
+        <article class="trait">
+          <div class="trait__tile"><img src="img/tile-cosy.webp" width="560" height="560" alt="Detail of Cosy's face from Cheesecake tasting." loading="lazy"></div>
+          <h3>Of course: Cosy</h3>
+          <p>Cosy appears in every picture, always wearing stripes or with stripes on the face. Cosy is shown in all kinds of scenarios and situations that explore different themes: sometimes sad and serious ones, but also the very beautiful moments in life, like those of childhood.</p>
+        </article>
+      </div>
+
+      <div class="why">
+        <blockquote>“Art is one of the few fields, if not the only one, where you don't have to be perfect. <strong>You just have to be yourself.</strong>”</blockquote>
+        <div class="stack">
+          <h3>Why art</h3>
+          <p>Art is the very embodiment of well-being. The simple fact that anything can be art speaks volumes: there are no rules, you can paint anything. You don't have to be talented, mistakes are allowed, freedom is an absolute priority, and everyone can tell their own story.</p>
+          <p>That is why we don't really have a defined style. Sometimes we switch things up, sometimes we plan what we do, and sometimes we just let the brush do its thing and see what comes out in the moment.</p>
+          <p class="motto--red">&laquo; That's what's really cosy &raquo;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sec-works" id="works">
+    <div class="wrap">
+      <div class="works__head">
+        <div>
+          <p class="kicker">Selected works</p>
+          <h2 class="h2" style="margin-bottom:.3rem">Works</h2>
+        </div>
+        <p id="works-count">{{COUNT}}</p>
+      </div>
+
+      <div class="grid" id="grid">
+{{WORKS}}
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact sec-about" id="contact">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Get in touch</p>
+        <h2 class="h2">Contact</h2>
+        <div class="stack measure">
+          <p class="lead">For exhibitions, collaborations or just to say hello, write to Mi.COSY.</p>
+          <p class="contact__email">
+            <a href="mailto:info@micosy.eu" id="contact-email">info@micosy.eu</a>
+            <button class="pill contact__copy" type="button" id="copy-email">Copy</button>
+          </p>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="panel">
+          <h3>Write to Mi.COSY</h3>
+          <p>Send an email and tell us what you have in mind. Mi.COSY replies personally.</p>
+          <div class="form__actions">
+            <a class="btn" href="mailto:info@micosy.eu?subject=Hello%20Mi.COSY">Write an email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img src="img/micosy-wordmark-s.png" alt="Mi.COSY" width="400" height="184">
+    <p class="sig">Be cosy.</p>
+    <p>Cosy appears in every work.</p>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb" aria-labelledby="lb-title">
+  <button class="lb__close" type="button" id="lb-close" aria-label="Close">×</button>
+  <div class="lb__inner">
+    <div class="lb__img"><img id="lb-img" src="" alt=""></div>
+    <div class="lb__meta">
+      <h3 id="lb-title"></h3>
+      <dl>
+        <dt>Size</dt><dd id="lb-size"></dd>
+        <dt>Technique</dt><dd id="lb-tech"></dd>
+      </dl>
+      <div class="lb__nav">
+        <button class="btn btn--ghost" type="button" id="lb-prev">← Previous</button>
+        <button class="btn btn--ghost" type="button" id="lb-next">Next →</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  (function () {
+    var works = {{WORKS_JSON}};
+    var $ = function (id) { return document.getElementById(id); };
+    var lb = $('lb'), lbImg = $('lb-img'), lbTitle = $('lb-title'), lbSize = $('lb-size'), lbTech = $('lb-tech');
+    var grid = $('grid'), current = 0;
+    function show(i) {
+      current = (i + works.length) % works.length;
+      var w = works[current];
+      lbImg.src = w.src; lbImg.alt = w.alt || w.title;
+      lbTitle.textContent = w.title;
+      lbSize.textContent = w.size || '—';
+      lbTech.textContent = (w.tech || '—') + (w.year ? ' · ' + w.year : '');
+    }
+    function openLb() { if (typeof lb.showModal === 'function') { if (!lb.open) lb.showModal(); } else { lb.setAttribute('open', ''); } }
+    function closeLb() { if (typeof lb.close === 'function' && lb.open) { lb.close(); } else { lb.removeAttribute('open'); } }
+    grid.addEventListener('click', function (e) {
+      var btn = e.target.closest('.work__btn'); if (!btn) return;
+      show(parseInt(btn.getAttribute('data-i'), 10)); openLb();
+    });
+    $('lb-prev').addEventListener('click', function () { show(current - 1); });
+    $('lb-next').addEventListener('click', function () { show(current + 1); });
+    $('lb-close').addEventListener('click', closeLb);
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.open) return;
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+    var copy = $('copy-email');
+    if (copy) copy.addEventListener('click', function () {
+      var addr = $('contact-email').textContent;
+      function done(ok) { copy.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(function () { copy.textContent = 'Copy'; }, 2000); }
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(addr).then(function () { done(true); }, function () { done(false); }); } else { done(false); }
+    });
+  })();
+</script>
+</body>
+</html>
